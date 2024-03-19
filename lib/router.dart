@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:medicare/features/admin/screens/account_type_list_screen.dart';
 import 'package:medicare/features/admin/screens/main_screen.dart';
 import 'package:medicare/features/auth/screens/login_screen.dart';
 import 'package:medicare/features/auth/screens/signup_screen.dart';
@@ -70,6 +71,14 @@ Route<dynamic> generateRoute(RouteSettings settings) {
     case AdminScreen.routeName:
       return MaterialPageRoute(
         builder: (context) => const AdminScreen(),
+      );
+    case AccountTypeListScreen.routeName:
+      List<dynamic> args = settings.arguments as List<dynamic>;
+
+      return MaterialPageRoute(
+        builder: (context) => AccountTypeListScreen(
+          accountType: args[0],
+        ),
       );
     case PharmacyScreen.routeName:
       return MaterialPageRoute(

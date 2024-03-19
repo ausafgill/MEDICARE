@@ -3,17 +3,17 @@ import 'package:medicare/shared/enums/accounts.dart';
 
 class UserModel {
   final String uid;
-  final String email;
+  String email;
   final String userName;
-  final String phoneNumber;
+  String phoneNumber;
   final AccountType userAccountType;
   final bool isAdminApproved;
   final LocationModel? location;
   final String? operatingHours;
-  final String? gender;
+  String? gender;
   final String? dateOfBirth;
   final bool? offerMedicalTests;
-  final String? vehicleNumber;
+  String? vehicleNumber;
   final bool? isDenied;
   String? imageUrl;
 

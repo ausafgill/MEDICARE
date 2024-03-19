@@ -27,10 +27,8 @@ class AdminRepository {
           .snapshots()
           .map((snapshot) {
             return snapshot.docs.map((doc) {
-              // Convert each document to a UserModel
               return UserModel.fromMap(doc.data());
             }).where((user) {
-              // Filter out user names that don't start with the search query
               return user.userName
                   .toLowerCase()
                   .startsWith(query.toLowerCase());
@@ -60,6 +58,25 @@ class AdminRepository {
     }
   }
 
+  Future<void> removeUser(String uid) async {
+    try {
+      await FirebaseFirestore.instance.collection('users').doc(uid).delete();
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<void> updateUser(UserModel newData) async {
+    try {
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc(newData.uid)
+          .update(newData.toJson());
+    } catch (e) {
+      rethrow;
+    }
+  }
+
   Future<void> removeFeedback(String uid) async {
     try {
       feedbacksList!.removeWhere((feedback) => feedback.uid == uid);
@@ -82,15 +99,8 @@ class AdminRepository {
     try {
       adminInfo!.approvals.remove(uid);
 
-      UserModel? userToRemove = removeUserModelFromList(approvalRequests, uid);
+      removeUserModelFromList(approvalRequests, uid);
 
-      if (userToRemove!.userAccountType == AccountType.pharmacy) {
-        adminInfo!.pharmacy++;
-      } else if (userToRemove.userAccountType == AccountType.company) {
-        adminInfo!.company++;
-      } else {
-        adminInfo!.transporter++;
-      }
       await FirebaseFirestore.instance
           .collection('admin')
           .doc('appdata')
@@ -165,6 +175,26 @@ class AdminRepository {
     } catch (e) {
       rethrow;
     }
+  }
+
+  Stream<int> getAccountTypeCount(AccountType accountType) {
+    return FirebaseFirestore.instance
+        .collection('users')
+        .where('userAccountType', isEqualTo: accountType.name)
+        .snapshots()
+        .map((snapshot) => snapshot.size);
+  }
+
+  Stream<List<UserModel>> getAllAccountTypeList(AccountType accountType) {
+    return firestore
+        .collection('users')
+        .where('userAccountType', isEqualTo: accountType.name)
+        .snapshots()
+        .map((snapshot) {
+      return snapshot.docs.map((e) {
+        return UserModel.fromMap(e.data());
+      }).toList();
+    });
   }
 
   getApprovalRequests() {

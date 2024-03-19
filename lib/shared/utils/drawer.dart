@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:medicare/features/admin/controller/admin_controller.dart';
+import 'package:medicare/features/admin/screens/account_type_list_screen.dart';
 import 'package:medicare/features/auth/controller/auth_controller.dart';
 import 'package:medicare/features/auth/screens/login_screen.dart';
 import 'package:medicare/shared/constants/colors.dart';
+import 'package:medicare/shared/enums/accounts.dart';
 
 class DrawerSetup extends ConsumerStatefulWidget {
   const DrawerSetup({
@@ -15,10 +17,6 @@ class DrawerSetup extends ConsumerStatefulWidget {
 }
 
 class _DrawerSetupState extends ConsumerState<DrawerSetup> {
-  late int pharmaCount;
-  late int patientCount;
-  late int companyCount;
-  late int transporterCount;
   Future logout() async {
     await ref.read(authControllerProvider).signOutUser();
     if (context.mounted) {
@@ -29,10 +27,6 @@ class _DrawerSetupState extends ConsumerState<DrawerSetup> {
 
   @override
   void initState() {
-    pharmaCount = ref.read(adminControllerProvider).getPharmacyCount();
-    patientCount = ref.read(adminControllerProvider).getPatientCount();
-    companyCount = ref.read(adminControllerProvider).getCompanyCount();
-    transporterCount = ref.read(adminControllerProvider).getTransporterCount();
     super.initState();
   }
 
@@ -57,20 +51,130 @@ class _DrawerSetupState extends ConsumerState<DrawerSetup> {
               onTap: () {
                 Navigator.pop(context);
               }),
-          MyDrawerTile(
-              icon: Icons.person, name: "$patientCount PATIENTS", onTap: () {}),
-          MyDrawerTile(
-              icon: Icons.local_pharmacy_rounded,
-              name: "$pharmaCount PHARMACIES",
-              onTap: () {}),
-          MyDrawerTile(
-              icon: Icons.corporate_fare,
-              name: "$companyCount COMPANIES",
-              onTap: () {}),
-          MyDrawerTile(
-              icon: Icons.emoji_transportation,
-              name: "$transporterCount TRANSPORTERS",
-              onTap: () {}),
+          StreamBuilder<int>(
+            stream: ref
+                .read(adminControllerProvider)
+                .getAccountTypeCount(AccountType.patient),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const ListTile(
+                  leading: Icon(Icons.front_loader),
+                  title: Text('Loading...'),
+                );
+              } else if (snapshot.hasError) {
+                return ListTile(
+                  leading: const Icon(Icons.error),
+                  title: Text('Error: ${snapshot.error}'),
+                );
+              } else {
+                final int patientCount = snapshot.data ?? 0;
+                return MyDrawerTile(
+                  icon: Icons.person,
+                  name: "$patientCount PATIENTS",
+                  onTap: () => Navigator.pushNamed(
+                    context,
+                    AccountTypeListScreen.routeName,
+                    arguments: [
+                      AccountType.patient,
+                    ],
+                  ),
+                );
+              }
+            },
+          ),
+          StreamBuilder<int>(
+            stream: ref
+                .read(adminControllerProvider)
+                .getAccountTypeCount(AccountType.pharmacy),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const ListTile(
+                  leading: Icon(Icons.front_loader),
+                  title: Text('Loading...'),
+                );
+              } else if (snapshot.hasError) {
+                return ListTile(
+                  leading: const Icon(Icons.error),
+                  title: Text('Error: ${snapshot.error}'),
+                );
+              } else {
+                final int pharmaciesCount = snapshot.data ?? 0;
+                return MyDrawerTile(
+                  icon: Icons.person,
+                  name: "$pharmaciesCount PHARMACIES",
+                  onTap: () => Navigator.pushNamed(
+                    context,
+                    AccountTypeListScreen.routeName,
+                    arguments: [
+                      AccountType.pharmacy,
+                    ],
+                  ),
+                );
+              }
+            },
+          ),
+          StreamBuilder<int>(
+            stream: ref
+                .read(adminControllerProvider)
+                .getAccountTypeCount(AccountType.company),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const ListTile(
+                  leading: Icon(Icons.front_loader),
+                  title: Text('Loading...'),
+                );
+              } else if (snapshot.hasError) {
+                return ListTile(
+                  leading: const Icon(Icons.error),
+                  title: Text('Error: ${snapshot.error}'),
+                );
+              } else {
+                final int companyCount = snapshot.data ?? 0;
+                return MyDrawerTile(
+                  icon: Icons.person,
+                  name: "$companyCount COMPANIES",
+                  onTap: () => Navigator.pushNamed(
+                    context,
+                    AccountTypeListScreen.routeName,
+                    arguments: [
+                      AccountType.company,
+                    ],
+                  ),
+                );
+              }
+            },
+          ),
+          StreamBuilder<int>(
+            stream: ref
+                .read(adminControllerProvider)
+                .getAccountTypeCount(AccountType.transporter),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const ListTile(
+                  leading: Icon(Icons.front_loader),
+                  title: Text('Loading...'),
+                );
+              } else if (snapshot.hasError) {
+                return ListTile(
+                  leading: const Icon(Icons.error),
+                  title: Text('Error: ${snapshot.error}'),
+                );
+              } else {
+                final int transporterCount = snapshot.data ?? 0;
+                return MyDrawerTile(
+                  icon: Icons.person,
+                  name: "$transporterCount TRANSPORTERS",
+                  onTap: () => Navigator.pushNamed(
+                    context,
+                    AccountTypeListScreen.routeName,
+                    arguments: [
+                      AccountType.transporter,
+                    ],
+                  ),
+                );
+              }
+            },
+          ),
           MyDrawerTile(icon: Icons.logout, name: 'LOGOUT', onTap: logout),
         ],
       ),

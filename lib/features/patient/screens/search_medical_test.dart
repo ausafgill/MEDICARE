@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:medicare/features/patient/controller/patient_controller.dart';
+import 'package:medicare/features/pharmacy/screens/medical_test_details.dart';
 import 'package:medicare/models/medical_request_model.dart';
 import 'package:medicare/models/medical_test_model.dart';
 import 'package:medicare/shared/constants/colors.dart';
@@ -107,66 +108,73 @@ class TestItemsTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(10.0),
-      child: Container(
-        decoration: BoxDecoration(
-          color: EColors.softGrey,
-          borderRadius: BorderRadius.circular(10),
+      child: GestureDetector(
+        onTap: () => Navigator.pushNamed(
+          context,
+          MedicalTestDetail.routeName,
+          arguments: [medicalTest],
         ),
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    medicalTest.medicalTestName,
-                    style: Theme.of(context).textTheme.headlineMedium,
-                  ),
-                  Text(
-                    medicalTest.pharmacyName,
-                    style: Theme.of(context).textTheme.headlineMedium,
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: GestureDetector(
-                      onTap: () {
-                        MedicalTestRequestModel request =
-                            MedicalTestRequestModel(
-                                requestId: const Uuid().v4(),
-                                userId: 'xNdsPtmj9Kbc8ez4M1srfJW73a32',
-                                pharmacyId: medicalTest.pharmacyId,
-                                medicalTest: medicalTest,
-                                isAccepted: false,
-                                isRejected: false);
-                        medicalRequest(request);
-                      },
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: EColors.primaryColor,
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        child: const Padding(
-                          padding: EdgeInsets.all(8.0),
-                          child: Text(
-                            "Request Medical",
-                            style: TextStyle(color: Colors.white),
+        child: Container(
+          decoration: BoxDecoration(
+            color: EColors.softGrey,
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      medicalTest.medicalTestName,
+                      style: Theme.of(context).textTheme.headlineMedium,
+                    ),
+                    Text(
+                      medicalTest.pharmacyName,
+                      style: Theme.of(context).textTheme.headlineMedium,
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: GestureDetector(
+                        onTap: () {
+                          MedicalTestRequestModel request =
+                              MedicalTestRequestModel(
+                                  requestId: const Uuid().v4(),
+                                  userId: 'xNdsPtmj9Kbc8ez4M1srfJW73a32',
+                                  pharmacyId: medicalTest.pharmacyId,
+                                  medicalTest: medicalTest,
+                                  isAccepted: false,
+                                  isRejected: false);
+                          medicalRequest(request);
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: EColors.primaryColor,
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          child: const Padding(
+                            padding: EdgeInsets.all(8.0),
+                            child: Text(
+                              "Request Medical",
+                              style: TextStyle(color: Colors.white),
+                            ),
                           ),
                         ),
                       ),
                     ),
-                  ),
-                ],
-              ),
-              Text(
-                '\$${medicalTest.price}',
-                style: Theme.of(context).textTheme.headlineMedium,
-              )
-            ],
+                  ],
+                ),
+                Text(
+                  'Rs.${medicalTest.price}',
+                  style: Theme.of(context).textTheme.headlineMedium,
+                )
+              ],
+            ),
           ),
         ),
       ),

@@ -21,7 +21,7 @@ class _MedicineDescriptionState extends State<MedicalEquipmentDescription> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        title: const Text("MEDICINE DETAIL",
+        title: const Text("EQUIPMENT DETAIL",
             style: TextStyle(color: Colors.white, fontSize: 22)),
         iconTheme: const IconThemeData(color: Colors.white),
         centerTitle: true,
@@ -40,7 +40,7 @@ class _MedicineDescriptionState extends State<MedicalEquipmentDescription> {
             ),
             Center(
               child: Text(
-                'Price: \$${widget.medicalEquipment.price}',
+                'Price: Rs.${widget.medicalEquipment.price}',
                 style: Theme.of(context).textTheme.headlineSmall,
               ),
             ),

@@ -155,7 +155,7 @@ class _CartScreenState extends ConsumerState<CartScreen> {
                             style: TextStyle(color: EColors.primaryColor),
                           ),
                           Text(
-                            '\$${ref.read(cartServiceProvider).getTotalPrice().toStringAsFixed(2)}',
+                            'Rs.${ref.read(cartServiceProvider).getTotalPrice().toStringAsFixed(2)}',
                             style: Theme.of(context).textTheme.headlineMedium,
                           ),
                         ],
@@ -256,7 +256,7 @@ class CartMedicineTile extends StatelessWidget {
             ],
           ),
           trailing: Text(
-            "\$${(medicine.price * medicine.medicineQuantity).toStringAsFixed(2)}",
+            "Rs.${(medicine.price * medicine.medicineQuantity).toStringAsFixed(2)}",
             style: Theme.of(context).textTheme.headlineMedium,
           ),
         ),
@@ -320,7 +320,7 @@ class CartMedicalEquipmentTile extends StatelessWidget {
               ],
             ),
             trailing: Text(
-              "\$${(medicalEquipment.price * medicalEquipment.quantity).toStringAsFixed(2)}",
+              "Rs.${(medicalEquipment.price * medicalEquipment.quantity).toStringAsFixed(2)}",
               style: Theme.of(context).textTheme.headlineMedium,
             ),
           ),

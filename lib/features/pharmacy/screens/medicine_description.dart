@@ -17,6 +17,7 @@ class MedicineDescription extends StatefulWidget {
 class _MedicineDescriptionState extends State<MedicineDescription> {
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
@@ -49,7 +50,7 @@ class _MedicineDescriptionState extends State<MedicineDescription> {
             ),
             Center(
               child: Text(
-                'Price: \$${widget.medicine.price}',
+                'Price: Rs.${widget.medicine.price}',
                 style: Theme.of(context).textTheme.headlineSmall,
               ),
             ),
@@ -84,16 +85,20 @@ class _MedicineDescriptionState extends State<MedicineDescription> {
               height: 25,
             ),
             Container(
+              width: size.width,
               decoration: BoxDecoration(
-                  color: const Color.fromARGB(255, 167, 247, 170),
-                  borderRadius: BorderRadius.circular(20),
-                  border: Border.all(color: Colors.green)),
-              child: Padding(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 35, horizontal: 12),
-                child: Text(
-                  widget.medicine.advantages,
-                  style: Theme.of(context).textTheme.headlineSmall,
+                color: const Color.fromARGB(255, 167, 247, 170),
+                borderRadius: BorderRadius.circular(20),
+                border: Border.all(color: Colors.green),
+              ),
+              child: Center(
+                child: Padding(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 35, horizontal: 12),
+                  child: Text(
+                    widget.medicine.advantages,
+                    style: Theme.of(context).textTheme.headlineSmall,
+                  ),
                 ),
               ),
             ),
@@ -101,6 +106,7 @@ class _MedicineDescriptionState extends State<MedicineDescription> {
               height: 15,
             ),
             Container(
+              width: size.width,
               decoration: BoxDecoration(
                 color: const Color.fromARGB(255, 242, 161, 155),
                 borderRadius: BorderRadius.circular(20),
@@ -108,12 +114,14 @@ class _MedicineDescriptionState extends State<MedicineDescription> {
                   color: Colors.red,
                 ),
               ),
-              child: Padding(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 35, horizontal: 12),
-                child: Text(
-                  widget.medicine.disadvantages,
-                  style: Theme.of(context).textTheme.headlineSmall,
+              child: Center(
+                child: Padding(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 35, horizontal: 12),
+                  child: Text(
+                    widget.medicine.disadvantages,
+                    style: Theme.of(context).textTheme.headlineSmall,
+                  ),
                 ),
               ),
             ),

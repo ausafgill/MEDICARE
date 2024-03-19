@@ -56,8 +56,7 @@ class _ApprovalRequestState extends ConsumerState<ApprovalRequest> {
         drawer: const DrawerSetup(),
         body: Consumer(
           builder: (context, ref, child) {
-            final adminController = ref.watch(
-                adminControllerProvider); // Adjust this to match your provider name
+            final adminController = ref.watch(adminControllerProvider);
             final approvalRequests = adminController.getApprovalRequests();
             if (approvalRequests == null) {
               return const CircularProgressIndicator();
@@ -90,7 +89,9 @@ class _ApprovalRequestState extends ConsumerState<ApprovalRequest> {
                             iconData: Icons.mail,
                           ),
                           ApprovalDataTile(
-                              title: user.phoneNumber, iconData: Icons.call),
+                            title: user.phoneNumber,
+                            iconData: Icons.call,
+                          ),
                           ApprovalDataTile(
                               title: user.operatingHours!,
                               iconData: Icons.timer),

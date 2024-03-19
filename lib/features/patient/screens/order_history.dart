@@ -103,7 +103,7 @@ class OrderHistoryTile extends StatelessWidget {
                 ),
               ),
               Text(
-                "\$${order.price}",
+                "Rs.${order.price}",
                 style: Theme.of(context).textTheme.headlineMedium,
               )
             ],

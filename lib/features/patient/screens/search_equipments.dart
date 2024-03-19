@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:medicare/features/company/screens/medical_equipment_description.dart';
 import 'package:medicare/features/patient/controller/patient_controller.dart';
 import 'package:medicare/features/patient/services/cart_service.dart';
 import 'package:medicare/models/medical_equipement_model.dart';
@@ -106,98 +107,105 @@ class EquimentsItemsTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(10.0),
-      child: Container(
-        decoration: BoxDecoration(
-          color: EColors.softGrey,
-          borderRadius: BorderRadius.circular(10),
+      child: GestureDetector(
+        onTap: () => Navigator.pushNamed(
+          context,
+          MedicalEquipmentDescription.routeName,
+          arguments: [medicalEquipment],
         ),
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    medicalEquipment.equipmentName,
-                    style: Theme.of(context).textTheme.headlineMedium,
-                  ),
-                  Text(
-                    medicalEquipment.companyName,
-                    style: Theme.of(context).textTheme.headlineMedium,
-                  ),
-                  Text(
-                    'Quantity : ${medicalEquipment.quantity}',
-                    style: Theme.of(context).textTheme.headlineMedium,
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      showDialog(
-                          context: context,
-                          builder: (context) {
-                            return AlertDialog(
-                              title: const Text("Add Quantity"),
-                              content: HelperTextField(
-                                htxt: 'Add Ammount',
-                                iconData: Icons.add,
-                                controller: _controller,
-                                keyboardType: TextInputType.number,
-                              ),
-                              actions: [
-                                TextButton(
-                                  onPressed: () {
-                                    if (int.parse(_controller.text) >
-                                        medicalEquipment.quantity) {
-                                      showSnackBar(
-                                          context: context,
-                                          content:
-                                              'Quantity Cannot be more than available Quantity');
-                                    } else {
-                                      MedicalEquipmentModel
-                                          orderedMedicalEquipment =
-                                          medicalEquipment;
-                                      orderedMedicalEquipment.quantity =
-                                          int.parse(_controller.text);
-                                      addToCart(orderedMedicalEquipment);
+        child: Container(
+          decoration: BoxDecoration(
+            color: EColors.softGrey,
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      medicalEquipment.equipmentName,
+                      style: Theme.of(context).textTheme.headlineMedium,
+                    ),
+                    Text(
+                      medicalEquipment.companyName,
+                      style: Theme.of(context).textTheme.headlineMedium,
+                    ),
+                    Text(
+                      'Quantity : ${medicalEquipment.quantity}',
+                      style: Theme.of(context).textTheme.headlineMedium,
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        showDialog(
+                            context: context,
+                            builder: (context) {
+                              return AlertDialog(
+                                title: const Text("Add Quantity"),
+                                content: HelperTextField(
+                                  htxt: 'Add Ammount',
+                                  iconData: Icons.add,
+                                  controller: _controller,
+                                  keyboardType: TextInputType.number,
+                                ),
+                                actions: [
+                                  TextButton(
+                                    onPressed: () {
+                                      if (int.parse(_controller.text) >
+                                          medicalEquipment.quantity) {
+                                        showSnackBar(
+                                            context: context,
+                                            content:
+                                                'Quantity Cannot be more than available Quantity');
+                                      } else {
+                                        MedicalEquipmentModel
+                                            orderedMedicalEquipment =
+                                            medicalEquipment;
+                                        orderedMedicalEquipment.quantity =
+                                            int.parse(_controller.text);
+                                        addToCart(orderedMedicalEquipment);
+                                        Navigator.pop(context);
+                                      }
+                                    },
+                                    child: const Text("Save"),
+                                  ),
+                                  TextButton(
+                                    onPressed: () {
                                       Navigator.pop(context);
-                                    }
-                                  },
-                                  child: const Text("Save"),
-                                ),
-                                TextButton(
-                                  onPressed: () {
-                                    Navigator.pop(context);
-                                  },
-                                  child: const Text("Cancel"),
-                                ),
-                              ],
-                            );
-                          });
-                    },
-                    child: Container(
-                      decoration: BoxDecoration(
-                          color: EColors.primaryColor,
-                          borderRadius: BorderRadius.circular(20)),
-                      child: const Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: Text(
-                          "Add to Cart",
-                          style: TextStyle(color: Colors.white),
+                                    },
+                                    child: const Text("Cancel"),
+                                  ),
+                                ],
+                              );
+                            });
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                            color: EColors.primaryColor,
+                            borderRadius: BorderRadius.circular(20)),
+                        child: const Padding(
+                          padding: EdgeInsets.all(8.0),
+                          child: Text(
+                            "Add to Cart",
+                            style: TextStyle(color: Colors.white),
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                ],
-              ),
-              Text(
-                '\$${medicalEquipment.price}',
-                style: Theme.of(context).textTheme.headlineMedium,
-              )
-            ],
+                  ],
+                ),
+                Text(
+                  'Rs.${medicalEquipment.price}',
+                  style: Theme.of(context).textTheme.headlineMedium,
+                )
+              ],
+            ),
           ),
         ),
       ),

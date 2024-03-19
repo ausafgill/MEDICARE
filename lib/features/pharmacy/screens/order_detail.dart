@@ -55,7 +55,7 @@ class _OrderDetailScreenState extends State<PharmacyOrderDetailScreen> {
                   Padding(
                     padding: const EdgeInsets.all(10.0),
                     child: Text(
-                      'Total: \$200.00',
+                      'Total: Rs.200.00',
                       style: Theme.of(context).textTheme.headlineMedium,
                     ),
                   ),
@@ -148,7 +148,7 @@ class OrderDetailCatalogueTile extends StatelessWidget {
                 ],
               ),
               Text(
-                "\$$price",
+                "Rs.$price",
                 style: Theme.of(context).textTheme.headlineMedium,
               )
             ],

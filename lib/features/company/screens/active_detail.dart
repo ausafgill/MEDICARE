@@ -94,7 +94,7 @@ class OrderTile extends StatelessWidget {
                           TextStyle(color: EColors.primaryColor, fontSize: 12),
                     ),
                     Text(
-                      "\$${order.price}",
+                      "Rs.${order.price}",
                       style: Theme.of(context).textTheme.headlineMedium,
                     )
                   ],

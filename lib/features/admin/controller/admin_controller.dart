@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:medicare/features/admin/repository/admin_repository.dart';
 import 'package:medicare/models/admin_model.dart';
 import 'package:medicare/models/user_model.dart';
+import 'package:medicare/shared/enums/accounts.dart';
 
 final adminControllerProvider = ChangeNotifierProvider((ref) {
   final adminRepository = ref.read(adminRepositoryProvider);
@@ -48,6 +49,18 @@ class AdminController with ChangeNotifier {
     }
   }
 
+  Future<void> removeUser(String uid) async {
+    try {
+      adminRepository.removeUser(uid);
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<void> editUser(UserModel user) async {
+    adminRepository.updateUser(user);
+  }
+
   Future<void> rejectUser({required String uid}) async {
     try {
       await adminRepository.rejectUser(uid);
@@ -79,20 +92,12 @@ class AdminController with ChangeNotifier {
     return adminRepository.getApprovalRequests();
   }
 
-  getPharmacyCount() {
-    return adminRepository.adminInfo!.pharmacy;
+  getAccountTypeCount(AccountType accountType) {
+    return adminRepository.getAccountTypeCount(accountType);
   }
 
-  getPatientCount() {
-    return adminRepository.adminInfo!.patient;
-  }
-
-  getCompanyCount() {
-    return adminRepository.adminInfo!.company;
-  }
-
-  getTransporterCount() {
-    return adminRepository.adminInfo!.transporter;
+  getAllAccountTypeList(AccountType accountType) {
+    return adminRepository.getAllAccountTypeList(accountType);
   }
 
   AdminModel? getAdminInfo() {

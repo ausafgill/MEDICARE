@@ -35,7 +35,7 @@ class _MedicalTestDetailState extends State<MedicalTestDetail> {
             ),
             Center(
               child: Text(
-                'Price: \$${widget.medicalTest.price}',
+                'Price: Rs.${widget.medicalTest.price}',
                 style: Theme.of(context).textTheme.headlineSmall,
               ),
             ),

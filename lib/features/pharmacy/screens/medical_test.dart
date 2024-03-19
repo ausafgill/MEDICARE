@@ -379,7 +379,7 @@ class _TestRequestTileState extends State<TestRequestTile> {
                 height: 10,
               ),
               Text(
-                '\$${widget.request.medicalTest.price.toStringAsFixed(2)}',
+                'Rs.${widget.request.medicalTest.price.toStringAsFixed(2)}',
                 style: Theme.of(context).textTheme.headlineMedium,
               ),
               const Spacer(),
@@ -443,7 +443,7 @@ class OfferedTestTile extends StatelessWidget {
                   height: 10,
                 ),
                 Text(
-                  'Price: \$${medicalTest.price}',
+                  'Price: Rs.${medicalTest.price}',
                   style: Theme.of(context).textTheme.titleLarge,
                 ),
                 const SizedBox(
