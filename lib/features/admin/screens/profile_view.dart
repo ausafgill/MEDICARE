@@ -102,18 +102,22 @@ class _ProfileViewState extends ConsumerState<ProfileView> {
                   title: widget.user.gender.toString(),
                   iconData: FontAwesomeIcons.user,
                   isEdited: setGender,
+                  keyboardType: TextInputType.text,
                 )
               : const Text(''),
           ProfileViewTile(
-              widget: widget,
-              title: widget.user.phoneNumber,
-              iconData: Icons.call,
-              isEdited: setPhoneNumber),
+            widget: widget,
+            title: widget.user.phoneNumber,
+            iconData: Icons.call,
+            isEdited: setPhoneNumber,
+            keyboardType: TextInputType.number,
+          ),
           ProfileViewTile(
             widget: widget,
             title: widget.user.email,
             iconData: Icons.mail,
             isEdited: setEmail,
+            keyboardType: TextInputType.text,
           ),
           widget.user.userAccountType.type == 'transporter'
               ? ProfileViewTile(
@@ -121,6 +125,7 @@ class _ProfileViewState extends ConsumerState<ProfileView> {
                   title: widget.user.vehicleNumber!,
                   iconData: FontAwesomeIcons.car,
                   isEdited: setVehicleNumber,
+                  keyboardType: TextInputType.text,
                 )
               : const Text(''),
           const Spacer(),
@@ -226,11 +231,13 @@ class ProfileViewTile extends StatelessWidget {
   final String title;
   final IconData iconData;
   final Function isEdited;
+  final TextInputType keyboardType;
   ProfileViewTile({
     super.key,
     required this.widget,
     required this.title,
     required this.iconData,
+    required this.keyboardType,
     required this.isEdited,
   });
 
@@ -260,7 +267,7 @@ class ProfileViewTile extends StatelessWidget {
                   controller: newInfo,
                   htxt: 'Update',
                   iconData: Icons.add,
-                  keyboardType: TextInputType.number,
+                  keyboardType: keyboardType,
                 ),
                 actions: [
                   TextButton(
