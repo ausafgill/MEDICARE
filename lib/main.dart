@@ -2,7 +2,9 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:medicare/features/admin/screens/main_screen.dart';
+import 'package:medicare/features/chat/screens/chat_screen.dart';
 import 'package:medicare/features/onboarding/screens/splash_screen.dart';
+import 'package:medicare/features/transporter/screen/main_screen.dart';
 import 'package:medicare/firebase_options.dart';
 import 'package:medicare/router.dart';
 import 'package:medicare/theme/theme.dart';
@@ -31,7 +33,7 @@ class MyApp extends StatelessWidget {
       darkTheme: EAppTheme.lightTheme,
       themeMode: ThemeMode.light,
       debugShowCheckedModeBanner: false,
-      home: AdminScreen(),
+      home: TransporterScreen(),
     );
   }
 }
